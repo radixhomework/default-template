@@ -36,3 +36,19 @@ How a typical request / event travels through the system.
 # build
 # run locally
 # test
+```
+
+## Deployment
+
+- Where this runs, how it is deployed, and what a release looks like.
+
+## Quality & CI
+
+- Static analysis (Sonar, CodeQL), test pipelines, quality gates — what
+  runs where and what counts as "passing".
+
+## Environments
+
+| Environment | Purpose | Notes |
+|---|---|---|
+| | | |
