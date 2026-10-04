@@ -6,13 +6,17 @@ PRODUCT.md / ARCHITECTURE.md) — read them before touching code.
 
 ## Commit policy
 
-- **Never commit or push unless the user explicitly asked for it.**
-  Finishing a task or passing tests is never consent to commit.
+- **Commit and push only on the user's explicit demand.** Finishing a
+  task or passing tests is never consent to commit.
+- **Sole exception — quality-check rounds**: when the user asks for a
+  quality check (or when the quality-fix loop below is running), the agent
+  is autonomous: it commits and pushes its fixes on its own so the fresh
+  analyses (Sonar, CodeQL) run, without asking each time.
 - If the user asks to hold for local testing, report "done, ready to test"
   and stop — don't ask again; wait for an explicit go.
 - Conventional-commit style, English (`feat:`, `fix:`, `refactor:`,
   `docs:` …), body bullets explaining the why. Feature work on `feat/*`
-  branches opened as PRs.
+  branches opened as PRs. Quality-fix iterations on the same branch/PR.
 - When the working tree contains files the agent did not create, inspect
   them and say so before staging everything.
 
@@ -38,6 +42,12 @@ what they report:
 
 Fix what was found, push, wait for fresh analyses, then re-check all three
 sources — repeat until clean.
+
+**During these fix/verify rounds the agent is autonomous**: it commits and
+pushes each fix itself (this is the only case where committing without an
+explicit user demand is allowed — see Commit policy), within the
+quality-check scope only. It does not use that autonomy to commit anything
+unrelated to the findings.
 
 **Stop rule: 3 iterations maximum, autonomously.** After 3 fix/verify
 iterations, stop and report remaining findings and what was tried; wait for
